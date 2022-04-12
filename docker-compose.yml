@@ -13,6 +13,7 @@ services:
     environment:
       JAVA_OPT_EXT: "-Duser.home=/home/rocketmq -Xms512M -Xmx512M -Xmn128m"
     command: ["sh","mqnamesrv"]
+    restart: always
     networks:
         rmq:
           aliases:
@@ -31,6 +32,7 @@ services:
     environment:
         JAVA_OPT_EXT: "-Duser.home=/home/rocketmq -Xms512M -Xmx512M -Xmn128m"
     command: ["sh","mqbroker","-c","/etc/rocketmq/broker.conf","-n","rmqnamesrv:9876","autoCreateTopicEnable=true"]
+    restart: always
     depends_on:
       - rmqnamesrv
     networks:
@@ -47,6 +49,7 @@ services:
         JAVA_OPTS: "-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
     depends_on:
       - rmqnamesrv
+    restart: always
     networks:
       rmq:
         aliases:
